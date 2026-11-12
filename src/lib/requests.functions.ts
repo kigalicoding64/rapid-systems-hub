@@ -50,7 +50,7 @@ export const submitServiceRequest = createServerFn({ method: "POST" })
         tracking_token_hash: tokenHash,
         request_type: data.requestType,
         client_type: data.client.clientType,
-        organization_name: data.client.clientType === "organization" ? data.client.organizationName : null,
+        organization_name: data.client.clientType === "organization" ? (data.client.organizationName ?? null) : null,
         contact_name: data.client.contactName,
         email: data.client.email,
         phone: data.client.phone,

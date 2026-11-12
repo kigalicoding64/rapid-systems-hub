@@ -8,11 +8,11 @@ export function SectionHeading({
   align = "left",
   className,
 }: {
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: ReactNode;
-  description?: ReactNode;
-  align?: "left" | "center";
-  className?: string;
+  description?: ReactNode | undefined;
+  align?: "left" | "center" | undefined;
+  className?: string | undefined;
 }) {
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>

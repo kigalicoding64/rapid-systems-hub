@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /** Thin circuit-trace motif drawn from the logo's line work. Decorative only. */
-export function CircuitLines({ className }: { className?: string }) {
+export function CircuitLines({ className }: { className?: string | undefined }) {
   return (
     <svg
       viewBox="0 0 600 400"

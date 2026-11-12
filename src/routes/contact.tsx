@@ -129,18 +129,18 @@ function ContactPage() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <Label htmlFor="c-name">Full name *</Label>
-                  <Input id="c-name" className="mt-2" autoComplete="name" value={values.name} onChange={(e) => set("name")(e.target.value)} aria-invalid={!!errors.name} />
-                  <FieldError message={errors.name} />
+                  <Input id="c-name" className="mt-2" autoComplete="name" value={values.name} onChange={(e) => set("name")(e.target.value)} aria-invalid={!!errors["name"]} />
+                  <FieldError message={errors["name"]} />
                 </div>
                 <div>
                   <Label htmlFor="c-email">Email *</Label>
-                  <Input id="c-email" type="email" className="mt-2" autoComplete="email" value={values.email} onChange={(e) => set("email")(e.target.value)} aria-invalid={!!errors.email} />
-                  <FieldError message={errors.email} />
+                  <Input id="c-email" type="email" className="mt-2" autoComplete="email" value={values.email} onChange={(e) => set("email")(e.target.value)} aria-invalid={!!errors["email"]} />
+                  <FieldError message={errors["email"]} />
                 </div>
                 <div>
                   <Label htmlFor="c-phone">Telephone</Label>
                   <Input id="c-phone" type="tel" className="mt-2" autoComplete="tel" value={values.phone} onChange={(e) => set("phone")(e.target.value)} />
-                  <FieldError message={errors.phone} />
+                  <FieldError message={errors["phone"]} />
                 </div>
                 <div>
                   <Label htmlFor="c-org">Organisation</Label>
@@ -149,13 +149,13 @@ function ContactPage() {
               </div>
               <div>
                 <Label htmlFor="c-subject">Subject *</Label>
-                <Input id="c-subject" className="mt-2" value={values.subject} onChange={(e) => set("subject")(e.target.value)} aria-invalid={!!errors.subject} />
-                <FieldError message={errors.subject} />
+                <Input id="c-subject" className="mt-2" value={values.subject} onChange={(e) => set("subject")(e.target.value)} aria-invalid={!!errors["subject"]} />
+                <FieldError message={errors["subject"]} />
               </div>
               <div>
                 <Label htmlFor="c-message">Message *</Label>
-                <Textarea id="c-message" rows={6} className="mt-2" value={values.message} onChange={(e) => set("message")(e.target.value)} aria-invalid={!!errors.message} />
-                <FieldError message={errors.message} />
+                <Textarea id="c-message" rows={6} className="mt-2" value={values.message} onChange={(e) => set("message")(e.target.value)} aria-invalid={!!errors["message"]} />
+                <FieldError message={errors["message"]} />
               </div>
               <div className="hidden" aria-hidden="true">
                 <label>

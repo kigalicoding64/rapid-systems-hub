@@ -107,17 +107,19 @@ function HomePage() {
           </div>
 
           <div className="relative hidden lg:block animate-rise" style={{ animationDelay: "200ms" }}>
-            <img
-              src={logoAsset.url}
-              alt={`${company.companyName} logo`}
-              width={740}
-              height={580}
-              className="logo-fade mx-auto w-full max-w-[520px]"
-            />
+            <figure className="mx-auto max-w-[480px] overflow-hidden rounded-2xl border border-on-navy/10 shadow-lift">
+              <img
+                src={logoAsset.url}
+                alt={`${company.companyName} logo`}
+                width={740}
+                height={580}
+                className="block w-full"
+              />
+            </figure>
           </div>
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 border-t border-on-navy/10 bg-navy-deep/70 backdrop-blur-sm">
+        <div className="absolute inset-x-0 bottom-0 hidden border-t border-on-navy/10 bg-navy-deep/70 backdrop-blur-sm md:block">
           <ul className="container-site grid grid-cols-2 md:grid-cols-4">
             {DIVISIONS.map((d, i) => (
               <li key={d.slug} className={i > 0 ? "md:border-l md:border-on-navy/10" : ""}>

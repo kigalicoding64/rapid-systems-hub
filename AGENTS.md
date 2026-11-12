@@ -28,3 +28,16 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules (RAPID SYSTEMS)
+
+- Public website pages wrap their content in `SiteLayout` (src/components/site); the client portal (`/client/*`) and operations platform (`/app/*`) will get their own shells — keeps the three experiences visually and structurally separate while `src/routes/index.tsx` stays the `/` route.
+- Company facts (name, contact details, vision, mission) come from the single-row `company_settings` table via `companyQueryOptions()`; never hard-code them in pages — the owner edits them in one place. The fallback constant in `company.functions.ts` must mirror the row.
+- Marketing copy for divisions, industries, solutions and process lives in `src/lib/site-content.ts` — one source for nav, pages and the request form's service/subcategory options.
+- Request-form validation lives in `src/lib/request-schema.ts` and is shared by browser and server; the server function re-parses everything — client checks are UX only.
+- Public submissions (requests, contact) are written only by server functions using the admin client after validation, honeypot and per-email hourly rate limit; those tables have no anon policies — guests must never read or write them directly.
+- Guest request tracking uses a 256-bit random token; only its SHA-256 hash is stored and lookups never expose internal ids or private notes — sequential references are display-only, never an access key.
+- Request files go to the private `request-attachments` bucket via server-issued signed upload URLs, then are recorded after the server verifies the object exists — no public bucket and no client storage policies.
+- Business reference numbers are assigned by a database trigger from a sequence — never generated in app code.
+- Portfolio entries are public only when `is_published` is true (RLS); never seed or show unverified sample projects.
+- Brand colours are sampled from the supplied logo and defined as tokens in `src/styles.css`; dark sections use the `.dark` class on a wrapper rather than hard-coded colours.

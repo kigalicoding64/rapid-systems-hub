@@ -103,9 +103,9 @@ export function RequestWizard({
   initialService,
   initialSubcategory,
 }: {
-  initialType?: RequestType;
-  initialService?: DivisionSlug;
-  initialSubcategory?: string;
+  initialType?: RequestType | undefined;
+  initialService?: DivisionSlug | undefined;
+  initialSubcategory?: string | undefined;
 }) {
   const [state, setState] = useState(() => initialState(initialType, initialService, initialSubcategory));
   const [step, setStep] = useState(0);

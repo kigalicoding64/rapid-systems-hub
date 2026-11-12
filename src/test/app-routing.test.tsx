@@ -14,4 +14,23 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+
+  it.each([
+    "/about",
+    "/services",
+    "/services/security-systems",
+    "/services/fire-life-safety",
+    "/services/audio-visual",
+    "/services/smart-buildings-ict",
+    "/industries",
+    "/solutions",
+    "/projects",
+    "/our-process",
+    "/contact",
+    "/request-quote",
+    "/track",
+  ])("matches a page for %s", (path) => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+    expect(router.matchRoutes(path).at(-1)?.routeId).not.toBe(rootRouteId);
+  });
 });

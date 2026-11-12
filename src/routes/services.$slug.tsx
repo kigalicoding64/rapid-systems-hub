@@ -67,7 +67,11 @@ function ServicePage() {
       {/* Explanation */}
       <section className="container-site grid gap-12 py-20 md:py-24 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
         <Reveal>
-          <SectionHeading eyebrow="The solution" title={d.summary} />
+          <p className="eyebrow flex items-center gap-3 text-cyan-deep">
+            <span className="h-px w-8 bg-current" aria-hidden="true" />
+            The solution
+          </p>
+          <h2 className="mt-4 text-2xl font-semibold leading-snug md:text-3xl">{d.summary}</h2>
         </Reveal>
         <Reveal delay={100} className="space-y-5 text-base leading-relaxed text-foreground/85 md:text-lg">
           {d.intro.map((p) => (

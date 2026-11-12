@@ -15,9 +15,12 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as OurProcessRouteImport } from './routes/our-process'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as RequestQuoteRouteImport } from './routes/request-quote'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
+import { Route as TrackIndexRouteImport } from './routes/track.index'
+import { Route as TrackTokenRouteImport } from './routes/track.$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -49,6 +52,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RequestQuoteRoute = RequestQuoteRouteImport.update({
+  id: '/request-quote',
+  path: '/request-quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SolutionsRoute = SolutionsRouteImport.update({
   id: '/solutions',
   path: '/solutions',
@@ -64,6 +72,16 @@ const ServicesSlugRoute = ServicesSlugRouteImport.update({
   path: '/services/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TrackIndexRoute = TrackIndexRouteImport.update({
+  id: '/track/',
+  path: '/track/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackTokenRoute = TrackTokenRouteImport.update({
+  id: '/track/$token',
+  path: '/track/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -72,9 +90,12 @@ export interface FileRoutesByFullPath {
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
   '/projects': typeof ProjectsRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/solutions': typeof SolutionsRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/track/$token': typeof TrackTokenRoute
   '/services/': typeof ServicesIndexRoute
+  '/track/': typeof TrackIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,9 +104,12 @@ export interface FileRoutesByTo {
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
   '/projects': typeof ProjectsRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/solutions': typeof SolutionsRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/track/$token': typeof TrackTokenRoute
   '/services': typeof ServicesIndexRoute
+  '/track': typeof TrackIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,9 +119,12 @@ export interface FileRoutesById {
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
   '/projects': typeof ProjectsRoute
+  '/request-quote': typeof RequestQuoteRoute
   '/solutions': typeof SolutionsRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/track/$token': typeof TrackTokenRoute
   '/services/': typeof ServicesIndexRoute
+  '/track/': typeof TrackIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,9 +135,12 @@ export interface FileRouteTypes {
     | '/industries'
     | '/our-process'
     | '/projects'
+    | '/request-quote'
     | '/solutions'
     | '/services/$slug'
+    | '/track/$token'
     | '/services/'
+    | '/track/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -119,9 +149,12 @@ export interface FileRouteTypes {
     | '/industries'
     | '/our-process'
     | '/projects'
+    | '/request-quote'
     | '/solutions'
     | '/services/$slug'
+    | '/track/$token'
     | '/services'
+    | '/track'
   id:
     | '__root__'
     | '/'
@@ -130,9 +163,12 @@ export interface FileRouteTypes {
     | '/industries'
     | '/our-process'
     | '/projects'
+    | '/request-quote'
     | '/solutions'
     | '/services/$slug'
+    | '/track/$token'
     | '/services/'
+    | '/track/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -142,9 +178,12 @@ export interface RootRouteChildren {
   IndustriesRoute: typeof IndustriesRoute
   OurProcessRoute: typeof OurProcessRoute
   ProjectsRoute: typeof ProjectsRoute
+  RequestQuoteRoute: typeof RequestQuoteRoute
   SolutionsRoute: typeof SolutionsRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
+  TrackTokenRoute: typeof TrackTokenRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
+  TrackIndexRoute: typeof TrackIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -191,6 +230,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/request-quote': {
+      id: '/request-quote'
+      path: '/request-quote'
+      fullPath: '/request-quote'
+      preLoaderRoute: typeof RequestQuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/solutions': {
       id: '/solutions'
       path: '/solutions'
@@ -212,6 +258,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/track/': {
+      id: '/track/'
+      path: '/track'
+      fullPath: '/track/'
+      preLoaderRoute: typeof TrackIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track/$token': {
+      id: '/track/$token'
+      path: '/track/$token'
+      fullPath: '/track/$token'
+      preLoaderRoute: typeof TrackTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -222,9 +282,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndustriesRoute: IndustriesRoute,
   OurProcessRoute: OurProcessRoute,
   ProjectsRoute: ProjectsRoute,
+  RequestQuoteRoute: RequestQuoteRoute,
   SolutionsRoute: SolutionsRoute,
   ServicesSlugRoute: ServicesSlugRoute,
+  TrackTokenRoute: TrackTokenRoute,
   ServicesIndexRoute: ServicesIndexRoute,
+  TrackIndexRoute: TrackIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

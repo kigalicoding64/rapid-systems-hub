@@ -5,7 +5,7 @@ import { CircuitLines } from "./CircuitLines";
 
 export interface Crumb {
   label: string;
-  to?: "/" | "/services" | "/track";
+  to?: "/" | "/services" | "/track" | undefined;
 }
 
 /** Dark cinematic header used by inner public pages. */
@@ -20,11 +20,11 @@ export function PageHero({
 }: {
   eyebrow: string;
   title: ReactNode;
-  description?: ReactNode;
+  description?: ReactNode | undefined;
   crumbs: Crumb[];
-  image?: string;
-  imageAlt?: string;
-  children?: ReactNode;
+  image?: string | undefined;
+  imageAlt?: string | undefined;
+  children?: ReactNode | undefined;
 }) {
   return (
     <section className="dark relative isolate overflow-hidden bg-background text-foreground">

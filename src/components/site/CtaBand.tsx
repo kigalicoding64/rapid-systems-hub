@@ -9,9 +9,9 @@ export function CtaBand({
   description = "Tell us about your site and requirements. We will review your request, arrange an assessment where needed and prepare an itemised proposal.",
   service,
 }: {
-  title?: string;
-  description?: string;
-  service?: DivisionSlug;
+  title?: string | undefined;
+  description?: string | undefined;
+  service?: DivisionSlug | undefined;
 }) {
   return (
     <section className="container-site py-20 md:py-28">

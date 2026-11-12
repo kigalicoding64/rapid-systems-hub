@@ -2,7 +2,7 @@ import markAsset from "@/assets/rapid-systems-mark.webp.asset.json";
 import { cn } from "@/lib/utils";
 
 /** The supplied RS symbol, shown unaltered; the backdrop edges fade into the navy header. */
-export function BrandMark({ className, name = "RAPID SYSTEMS" }: { className?: string; name?: string }) {
+export function BrandMark({ className, name = "RAPID SYSTEMS" }: { className?: string | undefined; name?: string | undefined }) {
   return (
     <span className={cn("flex items-center gap-3", className)}>
       <img

@@ -185,7 +185,7 @@ export function AdditionalStep({
         <FileDrop category="technical_document" icon={<FileText className="h-5 w-5" />} label="Technical documents" accept=".pdf,.doc,.docx,.xls,.xlsx,.dwg,.dxf" state={state} setFiles={setFiles} />
         <FileDrop category="attachment" icon={<Paperclip className="h-5 w-5" />} label="Other attachments" accept={ATTACHMENT_ACCEPT} state={state} setFiles={setFiles} />
       </div>
-      <FieldError message={errors.attachments} />
+      <FieldError message={errors["attachments"]} />
 
       {state.files.length > 0 && (
         <ul className="divide-y rounded-lg border">
@@ -347,13 +347,13 @@ export function ReviewStep({
       />
       <div className="rounded-lg border bg-accent/30 p-4">
         <label className="flex items-start gap-3 text-sm">
-          <Checkbox checked={state.consent} onCheckedChange={(v) => setConsent(v === true)} className="mt-0.5" aria-invalid={!!errors.consent} />
+          <Checkbox checked={state.consent} onCheckedChange={(v) => setConsent(v === true)} className="mt-0.5" aria-invalid={!!errors["consent"]} />
           <span>
             I consent to RAPID SYSTEMS processing the information and files in this request to assess my requirements,
             contact me about it and prepare a proposal.
           </span>
         </label>
-        <FieldError message={errors.consent} />
+        <FieldError message={errors["consent"]} />
       </div>
     </div>
   );

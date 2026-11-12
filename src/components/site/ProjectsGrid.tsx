@@ -11,7 +11,7 @@ const STATUS_LABEL: Record<PortfolioProject["completionStatus"], string> = {
   completed: "Completed",
 };
 
-export function ProjectsGrid({ projects, limit }: { projects: PortfolioProject[]; limit?: number }) {
+export function ProjectsGrid({ projects, limit }: { projects: PortfolioProject[]; limit?: number | undefined }) {
   const shown = limit ? projects.slice(0, limit) : projects;
 
   if (shown.length === 0) {

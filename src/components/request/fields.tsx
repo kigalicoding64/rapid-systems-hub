@@ -15,10 +15,10 @@ export function Field({
 }: {
   id: string;
   label: string;
-  required?: boolean;
-  hint?: string;
-  error?: string;
-  className?: string;
+  required?: boolean | undefined;
+  hint?: string | undefined;
+  error?: string | undefined;
+  className?: string | undefined;
   children: ReactNode;
 }) {
   return (
@@ -47,10 +47,10 @@ export function SelectField({
   onChange: (v: string) => void;
   options: readonly { value: string; label: string }[];
   placeholder: string;
-  invalid?: boolean;
+  invalid?: boolean | undefined;
 }) {
   return (
-    <Select value={value || undefined} onValueChange={onChange}>
+    <Select {...(value ? { value } : { value: "" })} onValueChange={onChange}>
       <SelectTrigger id={id} aria-invalid={invalid} className="w-full">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
@@ -75,8 +75,8 @@ export function ChoiceCards<T extends string>({
   name: string;
   value: T;
   onChange: (v: T) => void;
-  options: readonly { value: T; label: string; description?: string }[];
-  columns?: 2 | 3;
+  options: readonly { value: T; label: string; description?: string | undefined }[];
+  columns?: 2 | 3 | undefined;
 }) {
   return (
     <div role="radiogroup" aria-label={name} className={cn("grid gap-3", columns === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2")}>
