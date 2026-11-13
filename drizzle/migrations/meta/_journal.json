@@ -8,6 +8,13 @@
       "when": 1794498976073,
       "tag": "0000_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794542027741,
+      "tag": "0001_accounts_roles_portal_access",
+      "breakpoints": true
     }
   ]
 }

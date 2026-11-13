@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          details: Json
+          entity_id: string | null
+          entity_type: string
+          id: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          details?: Json
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          details?: Json
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+        }
+        Relationships: []
+      }
       company_settings: {
         Row: {
           company_name: string
@@ -86,6 +116,33 @@ export type Database = {
         }
         Relationships: []
       }
+      organizations: {
+        Row: {
+          country: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       portfolio_projects: {
         Row: {
           completion_status: Database["public"]["Enums"]["portfolio_status"]
@@ -136,6 +193,59 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      profiles: {
+        Row: {
+          account_type: Database["public"]["Enums"]["account_type"]
+          created_at: string
+          department: string | null
+          email: string
+          full_name: string
+          id: string
+          is_active: boolean
+          job_title: string | null
+          organization_id: string | null
+          phone: string | null
+          skills: string[]
+          updated_at: string
+        }
+        Insert: {
+          account_type?: Database["public"]["Enums"]["account_type"]
+          created_at?: string
+          department?: string | null
+          email?: string
+          full_name?: string
+          id: string
+          is_active?: boolean
+          job_title?: string | null
+          organization_id?: string | null
+          phone?: string | null
+          skills?: string[]
+          updated_at?: string
+        }
+        Update: {
+          account_type?: Database["public"]["Enums"]["account_type"]
+          created_at?: string
+          department?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          job_title?: string | null
+          organization_id?: string | null
+          phone?: string | null
+          skills?: string[]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       request_attachments: {
         Row: {
@@ -228,6 +338,7 @@ export type Database = {
           facility_type: string
           id: string
           installation_type: string
+          organization_id: string | null
           organization_name: string | null
           phone: string
           preferred_channel: string
@@ -244,6 +355,7 @@ export type Database = {
           site_type: string
           status: Database["public"]["Enums"]["request_status"]
           subcategory: string
+          submitted_by: string | null
           tracking_token_hash: string
           updated_at: string
         }
@@ -261,6 +373,7 @@ export type Database = {
           facility_type: string
           id?: string
           installation_type: string
+          organization_id?: string | null
           organization_name?: string | null
           phone: string
           preferred_channel: string
@@ -277,6 +390,7 @@ export type Database = {
           site_type: string
           status?: Database["public"]["Enums"]["request_status"]
           subcategory: string
+          submitted_by?: string | null
           tracking_token_hash: string
           updated_at?: string
         }
@@ -294,6 +408,7 @@ export type Database = {
           facility_type?: string
           id?: string
           installation_type?: string
+          organization_id?: string | null
           organization_name?: string | null
           phone?: string
           preferred_channel?: string
@@ -310,8 +425,38 @@ export type Database = {
           site_type?: string
           status?: Database["public"]["Enums"]["request_status"]
           subcategory?: string
+          submitted_by?: string | null
           tracking_token_hash?: string
           updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_requests_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -320,9 +465,41 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      bootstrap_owner_account: {
+        Args: { _user_id: string }
+        Returns: undefined
+      }
+      current_organization_id: { Args: never; Returns: string }
+      has_any_role: {
+        Args: {
+          _roles: Database["public"]["Enums"]["app_role"][]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: { _user_id: string }; Returns: boolean }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
+      link_guest_requests: { Args: { _user_id: string }; Returns: undefined }
     }
     Enums: {
+      account_type: "client" | "staff"
+      app_role:
+        | "super_admin"
+        | "director"
+        | "operations_manager"
+        | "sales"
+        | "project_manager"
+        | "engineer"
+        | "technician"
+        | "finance_officer"
+        | "client"
       portfolio_status: "planned" | "in_progress" | "completed"
       request_status:
         | "new"
@@ -468,6 +645,18 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      account_type: ["client", "staff"],
+      app_role: [
+        "super_admin",
+        "director",
+        "operations_manager",
+        "sales",
+        "project_manager",
+        "engineer",
+        "technician",
+        "finance_officer",
+        "client",
+      ],
       portfolio_status: ["planned", "in_progress", "completed"],
       request_status: [
         "new",

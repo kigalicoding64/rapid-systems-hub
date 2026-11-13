@@ -1,14 +1,15 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import {
   MAX_ATTACHMENTS,
-  SUBMISSIONS_PER_EMAIL_PER_HOUR,
   attachmentMetaSchema,
   serviceRequestSchema,
   trackingTokenSchema,
 } from "./request-schema";
 
 export interface SubmitRequestResult {
+  id?: string;
   reference: string;
   trackingToken: string;
   uploads: { index: number; path: string; token: string }[];
@@ -18,83 +19,48 @@ export const submitServiceRequest = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => serviceRequestSchema.parse(data))
   .handler(async ({ data }): Promise<SubmitRequestResult> => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { generateTrackingToken, hashToken, safeFileName, REQUEST_BUCKET } = await import(
-      "./requests.server"
-    );
+    const { createServiceRequest } = await import("./requests.server");
+    const created = await createServiceRequest(supabaseAdmin, data);
+    // Guests never receive the internal id.
+    return { reference: created.reference, trackingToken: created.trackingToken, uploads: created.uploads };
+  });
 
-    // Honeypot filled: reject without storing anything.
-    if (data.website) {
-      throw new Error("Your request could not be submitted. Please try again.");
-    }
+/** Signed-in submission: the request is linked to the caller's account and organisation. */
+export const submitClientRequest = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: unknown) => serviceRequestSchema.parse(data))
+  .handler(async ({ data, context }): Promise<SubmitRequestResult> => {
+    const { data: profile } = await context.supabase
+      .from("profiles")
+      .select("organization_id")
+      .eq("id", context.userId)
+      .maybeSingle();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { createServiceRequest } = await import("./requests.server");
+    return createServiceRequest(supabaseAdmin, data, {
+      userId: context.userId,
+      organizationId: profile?.organization_id ?? null,
+    });
+  });
 
-    const since = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-    const { count, error: countError } = await supabaseAdmin
-      .from("service_requests")
-      .select("id", { count: "exact", head: true })
-      .eq("email", data.client.email)
-      .gte("created_at", since);
-    if (countError) throw new Error("We could not submit your request right now. Please try again.");
-    if ((count ?? 0) >= SUBMISSIONS_PER_EMAIL_PER_HOUR) {
-      throw new Error(
-        "We have received several requests from this email address in the last hour. Please wait before submitting another, or contact us directly.",
-      );
-    }
-
-    const trackingToken = generateTrackingToken();
-    const tokenHash = await hashToken(trackingToken);
-
-    const { data: inserted, error } = await supabaseAdmin
-      .from("service_requests")
-      .insert({
-        reference: "",
-        tracking_token_hash: tokenHash,
-        request_type: data.requestType,
-        client_type: data.client.clientType,
-        organization_name: data.client.clientType === "organization" ? (data.client.organizationName ?? null) : null,
-        contact_name: data.client.contactName,
-        email: data.client.email,
-        phone: data.client.phone,
-        country: data.client.country,
-        preferred_channel: data.client.preferredChannel,
-        service_category: data.service.serviceCategory,
-        subcategory: data.service.subcategory,
-        project_title: data.service.projectTitle,
-        description: data.service.description,
-        facility_type: data.service.facilityType,
-        project_size: data.service.projectSize ?? null,
-        site_country: data.site.siteCountry,
-        site_city: data.site.siteCity,
-        site_address: data.site.siteAddress ?? null,
-        site_type: data.site.siteType,
-        installation_type: data.site.installationType,
-        preferred_visit_date: data.site.preferredVisitDate ?? null,
-        estimated_budget: data.additional.estimatedBudget ?? null,
-        desired_completion_date: data.additional.desiredCompletionDate ?? null,
-        additional_comments: data.additional.additionalComments ?? null,
-        consent_given_at: new Date().toISOString(),
-      })
-      .select("id, reference")
-      .single();
-
-    if (error || !inserted) {
-      console.error("service_requests insert failed", error);
-      throw new Error("We could not submit your request right now. Please try again.");
-    }
-
-    const uploads: SubmitRequestResult["uploads"] = [];
-    for (const [index, file] of data.attachments.entries()) {
-      const path = `${inserted.id}/${crypto.randomUUID()}-${safeFileName(file.name)}`;
-      const { data: signed, error: signError } = await supabaseAdmin.storage
-        .from(REQUEST_BUCKET)
-        .createSignedUploadUrl(path);
-      if (signError || !signed) {
-        console.error("createSignedUploadUrl failed", signError);
-        continue;
-      }
-      uploads.push({ index, path: signed.path, token: signed.token });
-    }
-
-    return { reference: inserted.reference, trackingToken, uploads };
+/** Short-lived download link for a request file; RLS on the caller's own client decides access first. */
+export const getAttachmentDownloadUrl = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: unknown) => z.object({ attachmentId: z.string().uuid() }).parse(data))
+  .handler(async ({ data, context }) => {
+    const { data: file } = await context.supabase
+      .from("request_attachments")
+      .select("storage_path, file_name")
+      .eq("id", data.attachmentId)
+      .maybeSingle();
+    if (!file) throw new Error("File not found");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { REQUEST_BUCKET } = await import("./requests.server");
+    const { data: signed, error } = await supabaseAdmin.storage
+      .from(REQUEST_BUCKET)
+      .createSignedUrl(file.storage_path, 60, { download: file.file_name });
+    if (error || !signed) throw new Error("Could not prepare the download");
+    return { url: signed.signedUrl };
   });
 
 const confirmSchema = trackingTokenSchema.extend({
