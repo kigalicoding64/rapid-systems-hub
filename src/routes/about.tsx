@@ -10,7 +10,7 @@ import { DivisionIcon } from "@/components/site/DivisionIcon";
 import { companyQueryOptions } from "@/lib/company.functions";
 import { DIVISIONS, WHY_POINTS } from "@/lib/site-content";
 import teamImg from "@/assets/engineering-team.jpg";
-import logoAsset from "@/assets/rapid-systems-logo.png.asset.json";
+import logoSrc from "@/assets/rapid-systems-mark.webp";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -80,7 +80,7 @@ function AboutPage() {
           </Reveal>
           <Reveal delay={120}>
             <img
-              src={logoAsset.url}
+              src={logoSrc}
               alt={`${company.companyName} logo`}
               width={1024}
               height={906}

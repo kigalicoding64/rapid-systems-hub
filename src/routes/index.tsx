@@ -15,7 +15,7 @@ import { portfolioQueryOptions } from "@/lib/portfolio.functions";
 import { DIVISIONS, INDUSTRIES, PROCESS_STEPS, SOLUTIONS, WHY_POINTS } from "@/lib/site-content";
 import heroImg from "@/assets/hero-infrastructure.jpg";
 import teamImg from "@/assets/engineering-team.jpg";
-import logoAsset from "@/assets/rapid-systems-logo-framed.webp.asset.json";
+import logoSrc from "@/assets/rapid-systems-mark.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -83,7 +83,7 @@ function HomePage() {
               <span className="block text-cyan">Integrated Protection.</span>
             </h1>
             <p
-              className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground animate-rise"
+              className="mt-7 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl animate-rise"
               style={{ animationDelay: "160ms" }}
             >
               We design and deliver security systems, fire and life safety, audio visual and smart building
@@ -109,7 +109,7 @@ function HomePage() {
           <div className="relative hidden lg:block animate-rise" style={{ animationDelay: "200ms" }}>
             <figure className="mx-auto max-w-[480px] overflow-hidden rounded-2xl border border-on-navy/10 shadow-lift">
               <img
-                src={logoAsset.url}
+                src={logoSrc}
                 alt={`${company.companyName} logo`}
                 width={740}
                 height={580}
