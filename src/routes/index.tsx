@@ -15,7 +15,8 @@ import { portfolioQueryOptions } from "@/lib/portfolio.functions";
 import { DIVISIONS, INDUSTRIES, PROCESS_STEPS, SOLUTIONS, WHY_POINTS } from "@/lib/site-content";
 import heroImg from "@/assets/hero-infrastructure.jpg";
 import teamImg from "@/assets/engineering-team.jpg";
-import logoSrc from "@/assets/rapid-systems-mark.webp";
+
+const logoSrc = "/rapid-systems-mark.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({

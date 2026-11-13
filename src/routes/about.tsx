@@ -10,7 +10,8 @@ import { DivisionIcon } from "@/components/site/DivisionIcon";
 import { companyQueryOptions } from "@/lib/company.functions";
 import { DIVISIONS, WHY_POINTS } from "@/lib/site-content";
 import teamImg from "@/assets/engineering-team.jpg";
-import logoSrc from "@/assets/rapid-systems-mark.webp";
+
+const logoSrc = "/rapid-systems-mark.webp";
 
 export const Route = createFileRoute("/about")({
   head: () => ({

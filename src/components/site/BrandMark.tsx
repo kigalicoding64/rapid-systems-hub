@@ -1,4 +1,4 @@
-import logoSrc from "@/assets/rapid-systems-mark.webp";
+const logoSrc = "/rapid-systems-mark.webp";
 import { cn } from "@/lib/utils";
 
 /** The supplied RS symbol, shown unaltered; the backdrop edges fade into the navy header. */
