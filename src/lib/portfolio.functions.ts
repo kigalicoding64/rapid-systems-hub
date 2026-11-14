@@ -17,14 +17,21 @@ export interface PortfolioProject {
 export const getPublishedProjects = createServerFn({ method: "GET" }).handler(
   async (): Promise<PortfolioProject[]> => {
     const { createPublicServerClient } = await import("./supabase-public.server");
-    const { data, error } = await createPublicServerClient()
+    let client;
+    try {
+      client = createPublicServerClient();
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+    const { data, error } = await client
       .from("portfolio_projects")
       .select("slug, title, industry, location, service_category, description, technologies, image_urls, completion_status")
       .eq("is_published", true)
       .order("published_at", { ascending: false, nullsFirst: false });
     if (error) {
       console.error("Failed to load portfolio", error);
-      throw new Error("Projects are temporarily unavailable");
+      return [];
     }
     return (data ?? []).map((p) => ({
       slug: p.slug,

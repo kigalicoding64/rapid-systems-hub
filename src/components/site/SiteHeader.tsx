@@ -21,6 +21,7 @@ const NAV = [
   { to: "/solutions", label: "Solutions" },
   { to: "/industries", label: "Industries" },
   { to: "/projects", label: "Projects" },
+  { to: "/partners", label: "Partners" },
   { to: "/our-process", label: "Our Process" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },

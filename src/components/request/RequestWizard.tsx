@@ -24,6 +24,7 @@ import { AdditionalStep, ClientDetailsStep, ReviewStep, ServiceStep, SiteStep } 
 import { RequestConfirmation, type ConfirmationData } from "./RequestConfirmation";
 import type { FieldErrors, RequestFormState, SelectedFile } from "./types";
 import type { ZodError } from "zod";
+import { friendlyError } from "@/lib/user-error";
 
 const STEPS = [
   { title: "Client details", description: "Who should we contact about this request?" },
@@ -194,7 +195,7 @@ export function RequestWizard({
       setResult(data);
       scrollTop();
     },
-    onError: (e: Error) => toast.error(e.message || "Your request could not be submitted. Please try again."),
+    onError: (e: Error) => toast.error(friendlyError(e, "We could not submit your request right now. Please try again shortly or email rapidsystemsug@gmail.com.")),
     onSettled: () => setPhase("idle"),
   });
 

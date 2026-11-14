@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { PageHero } from "@/components/site/PageHero";
+import { friendlyError } from "@/lib/user-error";
 import { FieldError } from "@/components/site/FieldError";
 import { companyQueryOptions } from "@/lib/company.functions";
 import { submitContactEnquiry } from "@/lib/contact.functions";
@@ -46,7 +47,7 @@ function ContactPage() {
       setSent(true);
       setValues(EMPTY);
     },
-    onError: (e: Error) => toast.error(e.message || "Your message could not be sent."),
+    onError: (e: Error) => toast.error(friendlyError(e, "We could not send your message right now. Please try again shortly or email rapidsystemsug@gmail.com.")),
   });
 
   const set = (key: keyof ContactEnquiryInput) => (v: string) => setValues((s) => ({ ...s, [key]: v }));

@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as OurProcessRouteImport } from './routes/our-process'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as RequestQuoteRouteImport } from './routes/request-quote'
 import { Route as SolutionsRouteImport } from './routes/solutions'
@@ -45,6 +46,11 @@ const IndustriesRoute = IndustriesRouteImport.update({
 const OurProcessRoute = OurProcessRouteImport.update({
   id: '/our-process',
   path: '/our-process',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsRoute = ProjectsRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
+  '/partners': typeof PartnersRoute
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
   '/solutions': typeof SolutionsRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
+  '/partners': typeof PartnersRoute
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
   '/solutions': typeof SolutionsRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
+  '/partners': typeof PartnersRoute
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
   '/solutions': typeof SolutionsRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/industries'
     | '/our-process'
+    | '/partners'
     | '/projects'
     | '/request-quote'
     | '/solutions'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/industries'
     | '/our-process'
+    | '/partners'
     | '/projects'
     | '/request-quote'
     | '/solutions'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/industries'
     | '/our-process'
+    | '/partners'
     | '/projects'
     | '/request-quote'
     | '/solutions'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   IndustriesRoute: typeof IndustriesRoute
   OurProcessRoute: typeof OurProcessRoute
+  PartnersRoute: typeof PartnersRoute
   ProjectsRoute: typeof ProjectsRoute
   RequestQuoteRoute: typeof RequestQuoteRoute
   SolutionsRoute: typeof SolutionsRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/our-process'
       fullPath: '/our-process'
       preLoaderRoute: typeof OurProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects': {
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   IndustriesRoute: IndustriesRoute,
   OurProcessRoute: OurProcessRoute,
+  PartnersRoute: PartnersRoute,
   ProjectsRoute: ProjectsRoute,
   RequestQuoteRoute: RequestQuoteRoute,
   SolutionsRoute: SolutionsRoute,

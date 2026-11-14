@@ -12,6 +12,8 @@ import { ProjectsGrid } from "@/components/site/ProjectsGrid";
 import { CtaBand } from "@/components/site/CtaBand";
 import { companyQueryOptions } from "@/lib/company.functions";
 import { portfolioQueryOptions } from "@/lib/portfolio.functions";
+import { partnersQueryOptions } from "@/lib/partners.functions";
+import { PartnersGrid } from "@/components/site/PartnersGrid";
 import { DIVISIONS, INDUSTRIES, PROCESS_STEPS, SOLUTIONS, WHY_POINTS } from "@/lib/site-content";
 import heroImg from "@/assets/hero-infrastructure.jpg";
 import teamImg from "@/assets/engineering-team.jpg";
@@ -39,6 +41,7 @@ export const Route = createFileRoute("/")({
   }),
   loader: ({ context }) => {
     context.queryClient.ensureQueryData(portfolioQueryOptions());
+    context.queryClient.ensureQueryData(partnersQueryOptions());
   },
   component: HomePage,
 });
@@ -55,6 +58,7 @@ const INDUSTRY_ICONS = {
 function HomePage() {
   const { data: company } = useSuspenseQuery(companyQueryOptions());
   const { data: projects } = useSuspenseQuery(portfolioQueryOptions());
+  const { data: partners } = useSuspenseQuery(partnersQueryOptions());
 
   return (
     <SiteLayout>
@@ -280,6 +284,19 @@ function HomePage() {
           <div className="mt-12">
             <ProjectsGrid projects={projects} limit={3} />
           </div>
+        </div>
+      </section>
+
+      {/* Partners */}
+      <section className="container-site py-20 md:py-28">
+        <Reveal>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SectionHeading eyebrow="Partners" title="Technology we trust." />
+            <Link to="/partners" className="text-sm font-medium text-cyan-deep hover:underline">All partners →</Link>
+          </div>
+        </Reveal>
+        <div className="mt-12">
+          <PartnersGrid partners={partners} limit={8} />
         </div>
       </section>
 
