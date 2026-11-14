@@ -518,6 +518,8 @@ export type Database = {
         | "fire-life-safety"
         | "audio-visual"
         | "smart-buildings-ict"
+        | "electrical-plumbing"
+        | "iptv-signage"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -676,6 +678,8 @@ export const Constants = {
         "fire-life-safety",
         "audio-visual",
         "smart-buildings-ict",
+        "electrical-plumbing",
+        "iptv-signage",
       ],
     },
   },

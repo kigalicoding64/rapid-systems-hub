@@ -1,0 +1,1 @@
+UPDATE public.company_settings SET email = 'rapidsystemsug@gmail.com' WHERE id = 1;

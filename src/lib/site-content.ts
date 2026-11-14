@@ -10,6 +10,8 @@ export const DIVISION_SLUGS = [
   "fire-life-safety",
   "audio-visual",
   "smart-buildings-ict",
+  "electrical-plumbing",
+  "iptv-signage",
 ] as const;
 export type DivisionSlug = (typeof DIVISION_SLUGS)[number];
 
@@ -243,6 +245,63 @@ export const DIVISIONS: Division[] = [
     ],
     related: ["security-systems", "audio-visual"],
   },
+  {
+    slug: "electrical-plumbing",
+    code: "05",
+    name: "Electrical & Plumbing",
+    shortName: "Electrical & Plumbing",
+    tagline: "Dependable power and water services for every building.",
+    summary:
+      "Electrical installation, wiring, lighting and power distribution, together with plumbing installation and maintenance.",
+    intro: [
+      "Every technology system depends on safe, well-installed electrical power, and every building depends on reliable water and drainage.",
+      "We install, upgrade and maintain electrical and plumbing works so that facilities run safely and the systems we integrate have a sound foundation.",
+    ],
+    image: smartImg,
+    imageAlt: "Building services infrastructure",
+    offerings: [
+      { name: "Electrical Installation & Wiring", summary: "New installations, rewiring, distribution boards and power outlets." },
+      { name: "Lighting", summary: "Indoor, outdoor and security lighting installation." },
+      { name: "Power Distribution & Backup", summary: "Distribution, changeover and backup power connections." },
+      { name: "Plumbing Installation", summary: "Water supply, drainage and fixture installation." },
+      { name: "Plumbing Maintenance & Repairs", summary: "Leak repairs, servicing and planned maintenance." },
+    ],
+    applications: ["Offices and commercial buildings", "Government and institutional facilities", "Residential developments"],
+    benefits: [
+      { title: "Safe installations", text: "Work carried out to recognised electrical and plumbing practice." },
+      { title: "One contractor", text: "Building services coordinated with your security and ICT works." },
+      { title: "Ongoing support", text: "Maintenance and repairs after installation." },
+    ],
+    related: ["smart-buildings-ict", "security-systems"],
+  },
+  {
+    slug: "iptv-signage",
+    code: "06",
+    name: "IPTV, Satellite TV & Signage",
+    shortName: "IPTV & Signage",
+    tagline: "Clear television and information on every screen.",
+    summary:
+      "IPTV distribution, satellite TV installation for crystal-clear reception, and digital signage displays.",
+    intro: [
+      "Hotels, offices, institutions and venues need television and information delivered reliably to many screens.",
+      "We design and install IPTV and satellite TV systems and digital signage, so content reaches the right screens clearly and is easy to manage.",
+    ],
+    image: avImg,
+    imageAlt: "Display screens showing content",
+    offerings: [
+      { name: "IPTV Systems", summary: "Television channels distributed over the network to screens across a site." },
+      { name: "Satellite TV Systems", summary: "Dish installation and distribution for crystal-clear TV reception." },
+      { name: "Digital Signage", summary: "Information and promotional displays with central content management." },
+      { name: "Video Walls & Displays", summary: "Display installation for reception areas, lobbies and control rooms." },
+    ],
+    applications: ["Hotels and guest houses", "Corporate offices and receptions", "Conference and event venues", "Public buildings"],
+    benefits: [
+      { title: "Clear reception", text: "Properly aligned and distributed signals." },
+      { title: "Central control", text: "Channels and signage content managed from one place." },
+      { title: "Scalable", text: "Add screens as your facility grows." },
+    ],
+    related: ["audio-visual", "smart-buildings-ict"],
+  },
 ];
 
 export function getDivision(slug: DivisionSlug): Division {
@@ -261,6 +320,8 @@ export const SUBCATEGORIES: Record<DivisionSlug, string[]> = {
   "fire-life-safety": [...getOfferingNames("fire-life-safety"), "Other / not sure"],
   "audio-visual": [...getOfferingNames("audio-visual"), "Other / not sure"],
   "smart-buildings-ict": [...getOfferingNames("smart-buildings-ict"), "Other / not sure"],
+  "electrical-plumbing": [...getOfferingNames("electrical-plumbing"), "Other / not sure"],
+  "iptv-signage": [...getOfferingNames("iptv-signage"), "Other / not sure"],
 };
 
 function getOfferingNames(slug: DivisionSlug): string[] {

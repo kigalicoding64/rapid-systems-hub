@@ -23,7 +23,7 @@ const COMPANY_FALLBACK: CompanySettings = {
     "To become East Africa's trusted leader in intelligent security, fire protection, audio visual, and smart infrastructure integration.",
   mission:
     "To design and deliver secure, compliant, and scalable technology, life-safety, and AV systems that enhance protection, efficiency, and operational excellence.",
-  email: "katumbajos@gmail.com",
+  email: "rapidsystemsug@gmail.com",
   phones: ["+256 774 448 035", "+256 703 6049"],
   region: "East Africa",
 };
