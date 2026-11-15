@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndustriesRouteImport } from './routes/industries'
 import { Route as OurProcessRouteImport } from './routes/our-process'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as RequestQuoteRouteImport } from './routes/request-quote'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
@@ -44,6 +46,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndustriesRoute = IndustriesRouteImport.update({
   id: '/industries',
   path: '/industries',
@@ -67,6 +74,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
 const RequestQuoteRoute = RequestQuoteRouteImport.update({
   id: '/request-quote',
   path: '/request-quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SolutionsRoute = SolutionsRouteImport.update({
@@ -100,11 +112,13 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
   '/partners': typeof PartnersRoute
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/solutions': typeof SolutionsRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/track/$token': typeof TrackTokenRoute
@@ -116,11 +130,13 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
   '/partners': typeof PartnersRoute
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/solutions': typeof SolutionsRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/track/$token': typeof TrackTokenRoute
@@ -133,11 +149,13 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/industries': typeof IndustriesRoute
   '/our-process': typeof OurProcessRoute
   '/partners': typeof PartnersRoute
   '/projects': typeof ProjectsRoute
   '/request-quote': typeof RequestQuoteRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/solutions': typeof SolutionsRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/track/$token': typeof TrackTokenRoute
@@ -151,11 +169,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/forgot-password'
     | '/industries'
     | '/our-process'
     | '/partners'
     | '/projects'
     | '/request-quote'
+    | '/reset-password'
     | '/solutions'
     | '/services/$slug'
     | '/track/$token'
@@ -167,11 +187,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/forgot-password'
     | '/industries'
     | '/our-process'
     | '/partners'
     | '/projects'
     | '/request-quote'
+    | '/reset-password'
     | '/solutions'
     | '/services/$slug'
     | '/track/$token'
@@ -183,11 +205,13 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/forgot-password'
     | '/industries'
     | '/our-process'
     | '/partners'
     | '/projects'
     | '/request-quote'
+    | '/reset-password'
     | '/solutions'
     | '/services/$slug'
     | '/track/$token'
@@ -200,11 +224,13 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   IndustriesRoute: typeof IndustriesRoute
   OurProcessRoute: typeof OurProcessRoute
   PartnersRoute: typeof PartnersRoute
   ProjectsRoute: typeof ProjectsRoute
   RequestQuoteRoute: typeof RequestQuoteRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SolutionsRoute: typeof SolutionsRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
   TrackTokenRoute: typeof TrackTokenRoute
@@ -242,6 +268,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/industries': {
       id: '/industries'
       path: '/industries'
@@ -275,6 +308,13 @@ declare module '@tanstack/react-router' {
       path: '/request-quote'
       fullPath: '/request-quote'
       preLoaderRoute: typeof RequestQuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/solutions': {
@@ -320,11 +360,13 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   IndustriesRoute: IndustriesRoute,
   OurProcessRoute: OurProcessRoute,
   PartnersRoute: PartnersRoute,
   ProjectsRoute: ProjectsRoute,
   RequestQuoteRoute: RequestQuoteRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SolutionsRoute: SolutionsRoute,
   ServicesSlugRoute: ServicesSlugRoute,
   TrackTokenRoute: TrackTokenRoute,
