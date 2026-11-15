@@ -51,6 +51,7 @@ export type Database = {
           email: string
           id: number
           mission: string
+          owner_email: string | null
           phones: string[]
           positioning: string
           region: string
@@ -63,6 +64,7 @@ export type Database = {
           email: string
           id?: number
           mission: string
+          owner_email?: string | null
           phones?: string[]
           positioning: string
           region: string
@@ -75,6 +77,7 @@ export type Database = {
           email?: string
           id?: number
           mission?: string
+          owner_email?: string | null
           phones?: string[]
           positioning?: string
           region?: string
@@ -113,6 +116,45 @@ export type Database = {
           organization?: string | null
           phone?: string | null
           subject?: string
+        }
+        Relationships: []
+      }
+      leadership_profiles: {
+        Row: {
+          bio: string
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          is_published: boolean
+          phone: string | null
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          bio?: string
+          created_at?: string
+          email?: string | null
+          full_name: string
+          id?: string
+          is_published?: boolean
+          phone?: string | null
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          bio?: string
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          is_published?: boolean
+          phone?: string | null
+          sort_order?: number
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }

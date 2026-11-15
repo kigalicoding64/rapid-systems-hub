@@ -8,6 +8,8 @@ import { Reveal } from "@/components/site/Reveal";
 import { CtaBand } from "@/components/site/CtaBand";
 import { DivisionIcon } from "@/components/site/DivisionIcon";
 import { companyQueryOptions } from "@/lib/company.functions";
+import { leadershipQueryOptions } from "@/lib/leadership.functions";
+import { LeadershipSection } from "@/components/site/LeadershipSection";
 import { DIVISIONS, WHY_POINTS } from "@/lib/site-content";
 import teamImg from "@/assets/engineering-team.jpg";
 
@@ -20,7 +22,7 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "Our vision, mission and approach to delivering secure, compliant and scalable security, fire safety, AV and smart infrastructure systems.",
+          "Our vision, mission, leadership and approach to delivering secure, compliant and scalable security, fire safety, AV and smart infrastructure systems.",
       },
       { property: "og:title", content: "About RAPID SYSTEMS" },
       {
@@ -31,6 +33,7 @@ export const Route = createFileRoute("/about")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(leadershipQueryOptions()),
   component: AboutPage,
 });
 
@@ -105,6 +108,8 @@ function AboutPage() {
           ))}
         </div>
       </section>
+
+      <LeadershipSection />
 
       <CtaBand />
     </SiteLayout>

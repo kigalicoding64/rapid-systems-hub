@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, CheckCircle2, Loader2, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2, Mail, MapPin, Phone, UserRound } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { friendlyError } from "@/lib/user-error";
 import { FieldError } from "@/components/site/FieldError";
 import { companyQueryOptions } from "@/lib/company.functions";
+import { leadershipQueryOptions } from "@/lib/leadership.functions";
 import { submitContactEnquiry } from "@/lib/contact.functions";
 import { contactEnquirySchema, type ContactEnquiryInput } from "@/lib/request-schema";
 
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/contact")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(leadershipQueryOptions()),
   component: ContactPage,
 });
 
@@ -37,6 +39,8 @@ const EMPTY: ContactEnquiryInput = { name: "", email: "", phone: "", organizatio
 
 function ContactPage() {
   const { data: company } = useSuspenseQuery(companyQueryOptions());
+  const { data: leaders } = useSuspenseQuery(leadershipQueryOptions());
+  const executive = leaders.find((l) => l.email);
   const [values, setValues] = useState<ContactEnquiryInput>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sent, setSent] = useState(false);
@@ -79,7 +83,7 @@ function ContactPage() {
           <a href={`mailto:${company.email}`} className="flex items-start gap-4 rounded-xl border bg-card p-6 shadow-soft hover:border-primary">
             <Mail className="h-5 w-5 text-cyan-deep" aria-hidden="true" />
             <span>
-              <span className="eyebrow block text-muted-foreground">Email</span>
+              <span className="eyebrow block text-muted-foreground">General enquiries</span>
               <span className="mt-1 block font-medium">{company.email}</span>
             </span>
           </a>
@@ -87,13 +91,26 @@ function ContactPage() {
             <Phone className="h-5 w-5 text-cyan-deep" aria-hidden="true" />
             <span>
               <span className="eyebrow block text-muted-foreground">Telephone</span>
-              {company.phones.map((p) => (
+              {company.phones.map((p, i) => (
                 <a key={p} href={`tel:${p.replace(/\s+/g, "")}`} className="mt-1 block font-medium hover:text-primary">
                   {p}
+                  {company.phones.length > 1 && (
+                    <span className="ml-2 text-xs font-normal text-muted-foreground">{i === 0 ? "Main line" : "Secondary"}</span>
+                  )}
                 </a>
               ))}
             </span>
           </div>
+          {executive && (
+            <a href={`mailto:${executive.email}`} className="flex items-start gap-4 rounded-xl border bg-card p-6 shadow-soft hover:border-primary">
+              <UserRound className="h-5 w-5 text-cyan-deep" aria-hidden="true" />
+              <span>
+                <span className="eyebrow block text-muted-foreground">Executive office</span>
+                <span className="mt-1 block font-medium">{executive.fullName}, {executive.title}</span>
+                <span className="mt-0.5 block break-all text-sm text-muted-foreground">{executive.email}</span>
+              </span>
+            </a>
+          )}
           <div className="flex items-start gap-4 rounded-xl border bg-card p-6 shadow-soft">
             <MapPin className="h-5 w-5 text-cyan-deep" aria-hidden="true" />
             <span>

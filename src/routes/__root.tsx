@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { companyQueryOptions } from "../lib/company.functions";
 import { Toaster } from "@/components/ui/sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
   return (
@@ -132,6 +133,18 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  // One listener for identity changes: refresh account data and re-run route guards.
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange((event) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      if (event === "SIGNED_OUT") queryClient.setQueryData(["my-account"], null);
+      else void queryClient.invalidateQueries();
+      void router.invalidate();
+    });
+    return () => data.subscription.unsubscribe();
+  }, [queryClient, router]);
 
   return (
     <QueryClientProvider client={queryClient}>

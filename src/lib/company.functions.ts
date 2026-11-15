@@ -24,7 +24,7 @@ const COMPANY_FALLBACK: CompanySettings = {
   mission:
     "To design and deliver secure, compliant, and scalable technology, life-safety, and AV systems that enhance protection, efficiency, and operational excellence.",
   email: "rapidsystemsug@gmail.com",
-  phones: ["+256 774 448 035", "+256 703 6049"],
+  phones: ["+256 774 448 035", "+256 703 604 969"],
   region: "East Africa",
 };
 
